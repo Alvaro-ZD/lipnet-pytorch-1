@@ -32,7 +32,7 @@ def train_one_epoch(optimizer,
 
         for seq in y:
             length = (seq != 38).sum()
-            y_true.exten(seq[:length].tolist())
+            y_true.extend(seq[:length].tolist())
             target_lengths.append(length)
 
         target_lengths = torch.tensor(target_lengths, dtype=torch.long).to(device)
@@ -52,9 +52,9 @@ def train_one_epoch(optimizer,
         words= [ ]
 
         for i in range(y.shape[0]):
-            for n in range(75):
-                max = torch.argmax(pred[n][i])
-                word.append(max.cpu().detach().numpy())
+            for n in range(min(75, len(pred))):
+                max_val = torch.argmax(pred[n][i])
+                word.append(max_val.cpu().detach().numpy())
             words.append(word)
             word = []
         words = np.stack(words , axis=0)

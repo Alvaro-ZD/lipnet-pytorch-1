@@ -16,7 +16,7 @@ class CustomDataset(Dataset):
     path = self.files[idx]
     vocab = get_stoi(path)
     mpgpath = os.getcwd() + "/data/s1/"
-    mpgpath = mpgpath + path.split("/")[5].split(".")[0] + ".mpg"
+    mpgpath = os.path.join(os.getcwd(), "data", "s1", os.path.basename(path).split(".")[0] + ".mpg")
     frames = []
     cap = cv2.VideoCapture(mpgpath)
     ret = True
